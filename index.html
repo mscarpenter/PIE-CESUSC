@@ -4,446 +4,230 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <title>Infográfico: Compreendendo a Extensão Universitária</title>
-  
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          colors: {
-            brand: {
-              paper: '#F5F2EB',
-              blue: '#2A405A',
-              terracotta: '#D05A3F',
-              sage: '#52735B',
-              dark: '#12151B'
-            }
-          },
           fontFamily: {
-            sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
-            serif: ['Newsreader', 'Georgia', 'serif']
+            sans: ['Plus Jakarta Sans','Inter','system-ui','sans-serif'],
+            serif: ['Newsreader','Georgia','serif']
           }
         }
       }
     }
   </script>
-
-  <!-- Google Fonts & Lucide Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400;1,6..72,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
-
   <style>
-    * {
-      box-sizing: border-box;
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{width:100%;height:100%;overflow:auto;background:#0E1015;-webkit-font-smoothing:antialiased}
+    .canvas{min-width:100%;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:8px}
+    @media(min-width:768px){.canvas{height:100vh;overflow:hidden;padding:16px}}
+
+    /* Zonas clicáveis - Novo efeito de sombreamento e luz (Glassmorphism) */
+    .zone {
+      position: absolute;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 20;
     }
     
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: #0E1015;
-      color: #E2E8F0;
-      -webkit-font-smoothing: antialiased;
-      -webkit-tap-highlight-color: transparent;
+    .zone:hover {
+      /* Remove o contorno e coloca um sombreamento suave escuro */
+      box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+      
+      /* O segredo: clareia sutilmente a parte da imagem que está embaixo da zona! */
+      backdrop-filter: brightness(1.06) saturate(1.05);
+      -webkit-backdrop-filter: brightness(1.06) saturate(1.05);
+      
+      /* Um fundo branco quase imperceptível só pra dar volume */
+      background: rgba(255, 255, 255, 0.02);
     }
 
-    /* Container de tela cheia que centraliza o infográfico */
-    .infographic-canvas {
-      min-width: 100%;
-      min-height: 100%;
+    /* Botão flutuante Tela Cheia */
+    .fab-btn {
+      background: rgba(18,21,27,.8);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.1);
+      color: rgba(255,255,255,.7);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(0,0,0,.2);
+      transition: all 0.2s;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 8px;
-      touch-action: pan-x pan-y pinch-zoom;
+    }
+    .fab-btn:hover {
+      color: #fff;
+      transform: scale(1.05);
+      background: rgba(30,35,45,.9);
     }
 
-    @media (min-width: 768px) {
-      .infographic-canvas {
-        height: 100vh;
-        overflow: hidden;
-        padding: 16px;
-      }
+    /* Janela flutuante de citação */
+    .cite-card{
+      position:absolute;
+      z-index:30;
+      width:340px;
+      background:#fff;
+      border-radius:10px;
+      box-shadow:0 8px 32px rgba(0,0,0,.25), 0 0 0 1px rgba(0,0,0,.06);
+      padding:20px;
+      display:none;
+      font-size:14px;
+      color:#3a3a3a;
+      line-height:1.55;
+      animation:fadeIn .2s ease;
     }
-
-    /* Peças interativas sobre o infográfico: invisíveis por padrão */
-    .piece-zone {
-      position: absolute;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 20;
-      border: 2px solid transparent;
+    .cite-card.show{display:block}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+    .cite-card .label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#999;margin-bottom:4px}
+    .cite-card .title{font-size:16px;font-weight:700;color:#1a1a1a;margin-bottom:12px;line-height:1.3}
+    .cite-card .src{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+    .cite-card .src.legal{color:#b45309}
+    .cite-card .src.academic{color:#0369a1}
+    
+    .cite-card blockquote{
+      font-family:'Newsreader',Georgia,serif;
+      font-style:italic;
+      font-size:15px; 
+      color:#444;
+      padding-left:12px;
+      margin:0 0 14px 0;
     }
-
-    /* Efeito de hover suave sobre a peça */
-    .piece-zone:hover {
-      border-color: rgba(208, 90, 63, 0.8);
-      background-color: rgba(208, 90, 63, 0.08);
-      box-shadow: 0 0 25px rgba(208, 90, 63, 0.25);
-    }
-
-    .piece-zone:hover .piece-pill {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .piece-pill {
-      opacity: 0;
-      transform: translateY(4px);
-      transition: all 0.2s ease;
-      pointer-events: none;
-    }
-
-    /* Modal Pop-up */
-    .modal-backdrop {
-      background: rgba(8, 10, 15, 0.82);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-    }
-
-    /* Botão discreto flutuante */
-    .glass-btn {
-      background: rgba(18, 21, 27, 0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-    }
+    .cite-card blockquote.bl{border-left:3px solid #d97706}
+    .cite-card blockquote.bs{border-left:3px solid #0284c7}
+    
+    .cite-card .ref-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#aaa;margin-bottom:4px;padding-top:10px;border-top:1px solid #eee}
+    .cite-card .ref{font-family:ui-monospace,monospace;font-size:11px;color:#888;line-height:1.5}
+    .cite-card .close-btn{position:absolute;top:10px;right:10px;width:24px;height:24px;border-radius:50%;border:none;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#bbb;font-size:16px;line-height:1;transition:all .15s}
+    .cite-card .close-btn:hover{background:#f5f5f5;color:#666}
+    .cite-card .copy-btn{font-size:11px;color:#aaa;cursor:pointer;border:none;background:none;padding:0;transition:color .15s}
+    .cite-card .copy-btn:hover{color:#555}
   </style>
 </head>
-
 <body class="font-sans select-none relative">
+  <main class="canvas">
+    <div id="poster" class="relative inline-block shadow-2xl rounded-lg overflow-visible bg-[#F5F2EB] max-w-full">
+      <img src="assets/infografico-final-v2.jpg" alt="Infográfico: Compreendendo a Extensão Universitária" class="block max-h-[97vh] max-w-[97vw] w-auto h-auto object-contain pointer-events-none select-none rounded-lg" loading="eager">
 
-  <!-- ======================================================== -->
-  <!-- INFOGRÁFICO PURO EM TELA CHEIA (SEM HEADER NEM FOOTER)   -->
-  <!-- ======================================================== -->
-  <main class="infographic-canvas">
-    
-    <div id="poster-container" class="relative inline-block shadow-2xl rounded-xl overflow-hidden bg-[#F5F2EB] max-w-full">
-      
-      <!-- Imagem 4X do Figma (7789x4307) em altíssima definição -->
-      <img id="poster-image"
-           src="assets/infografico-final-4x.png" 
-           alt="Infográfico: Compreendendo a Extensão Universitária" 
-           class="block max-h-[96vh] max-w-[96vw] w-auto h-auto object-contain pointer-events-none select-none"
-           loading="eager">
+      <!-- Zonas clicáveis -->
+      <div onclick="show('tripe',this)" class="zone" style="top:13.5%;left:1.8%;width:47.2%;height:35.5%"></div>
+      <div onclick="show('dinamica',this)" class="zone" style="top:50.2%;left:1.8%;width:47.2%;height:38.5%"></div>
+      <div onclick="show('protagonismo',this)" class="zone" style="top:3.2%;left:50.2%;width:25.2%;height:55.5%"></div>
+      <div onclick="show('comparativo',this)" class="zone" style="top:3.2%;left:76.2%;width:22%;height:55.5%"></div>
+      <div onclick="show('sintese',this)" class="zone" style="top:60%;left:50.2%;width:48%;height:28.5%"></div>
+      <div onclick="show('rodape',this)" class="zone" style="top:90%;left:1.8%;width:96.4%;height:8.5%"></div>
 
-      <!-- ======================================================== -->
-      <!-- PEÇAS CLICÁVEIS (MAPAS SOBRE CADA BLOCO DO INFOGRÁFICO)  -->
-      <!-- ======================================================== -->
-
-      <!-- 1. TRIPÉ ACADÊMICO (ART. 207 CF/88) -->
-      <div onclick="openModal('tripe')" 
-           class="piece-zone" 
-           style="top: 13.5%; left: 1.8%; width: 47.2%; height: 35.5%;" 
-           title="Clique no Tripé Acadêmico para abrir a citação">
-        <span class="piece-pill absolute top-2 right-2 px-2.5 py-1 rounded-md bg-stone-900/90 text-white text-[11px] font-bold shadow-lg flex items-center space-x-1 border border-white/10">
-          <i data-lucide="scale" class="w-3.5 h-3.5 text-amber-400"></i>
-          <span>Art. 207 CF/88 ↗</span>
-        </span>
+      <!-- Janela flutuante de citação -->
+      <div id="card" class="cite-card">
+        <button class="close-btn" onclick="hide()">×</button>
+        <div id="c-label" class="label"></div>
+        <div id="c-title" class="title"></div>
+        <div class="src legal" style="display:flex;justify-content:space-between;align-items:center">
+          <span id="c-lt"></span>
+          <button class="copy-btn" onclick="cp('c-lq')">copiar</button>
+        </div>
+        <blockquote id="c-lq" class="bl"></blockquote>
+        <div class="src academic" style="display:flex;justify-content:space-between;align-items:center">
+          <span id="c-at"></span>
+          <button class="copy-btn" onclick="cp('c-aq')">copiar</button>
+        </div>
+        <blockquote id="c-aq" class="bs"></blockquote>
+        <div class="ref-label" style="display:flex;justify-content:space-between;align-items:center">
+          <span>Referências</span>
+          <button class="copy-btn" onclick="cp('c-ref')">copiar</button>
+        </div>
+        <div id="c-ref" class="ref"></div>
       </div>
-
-      <!-- 2. DINÂMICA DIALÓGICA (VIA DE MÃO DUPLA) -->
-      <div onclick="openModal('dinamica')" 
-           class="piece-zone" 
-           style="top: 50.2%; left: 1.8%; width: 47.2%; height: 38.5%;" 
-           title="Clique na Dinâmica Dialógica para abrir a citação">
-        <span class="piece-pill absolute top-2 right-2 px-2.5 py-1 rounded-md bg-stone-900/90 text-white text-[11px] font-bold shadow-lg flex items-center space-x-1 border border-white/10">
-          <i data-lucide="repeat" class="w-3.5 h-3.5 text-sky-400"></i>
-          <span>Mão Dupla (Res. 7/2018) ↗</span>
-        </span>
-      </div>
-
-      <!-- 3. PROTAGONISMO DO ESTUDANTE (6 ETAPAS) -->
-      <div onclick="openModal('protagonismo')" 
-           class="piece-zone" 
-           style="top: 3.2%; left: 50.2%; width: 25.2%; height: 55.5%;" 
-           title="Clique no Protagonismo para abrir a citação">
-        <span class="piece-pill absolute top-2 right-2 px-2.5 py-1 rounded-md bg-stone-900/90 text-white text-[11px] font-bold shadow-lg flex items-center space-x-1 border border-white/10">
-          <i data-lucide="user-check" class="w-3.5 h-3.5 text-emerald-400"></i>
-          <span>Art. 6º Protagonismo ↗</span>
-        </span>
-      </div>
-
-      <!-- 4. COMPARATIVO (EXTENSÃO VS VOLUNTARIADO VS ASSISTENCIALISMO) -->
-      <div onclick="openModal('comparativo')" 
-           class="piece-zone" 
-           style="top: 3.2%; left: 76.2%; width: 22%; height: 55.5%;" 
-           title="Clique no Comparativo para abrir as citações">
-        <span class="piece-pill absolute top-2 right-2 px-2.5 py-1 rounded-md bg-stone-900/90 text-white text-[11px] font-bold shadow-lg flex items-center space-x-1 border border-white/10">
-          <i data-lucide="split" class="w-3.5 h-3.5 text-amber-400"></i>
-          <span>Parecer 608/2018 ↗</span>
-        </span>
-      </div>
-
-      <!-- 5. SÍNTESE FINAL (POR QUE A UNIVERSIDADE DEVE ATUAR NA SOCIEDADE?) -->
-      <div onclick="openModal('sintese')" 
-           class="piece-zone" 
-           style="top: 60%; left: 50.2%; width: 48%; height: 28.5%;" 
-           title="Clique na Síntese para abrir a citação">
-        <span class="piece-pill absolute top-2 right-2 px-2.5 py-1 rounded-md bg-stone-900/90 text-white text-[11px] font-bold shadow-lg flex items-center space-x-1 border border-white/10">
-          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-brand-terracotta"></i>
-          <span>Função Social & Caso Real ↗</span>
-        </span>
-      </div>
-
-      <!-- 6. RODAPÉ / FONTES -->
-      <div onclick="openModal('rodape')" 
-           class="piece-zone" 
-           style="top: 90%; left: 1.8%; width: 96.4%; height: 8.5%;" 
-           title="Clique no rodapé para ver as fontes ABNT">
-        <span class="piece-pill absolute bottom-2 right-2 px-2.5 py-1 rounded-md bg-stone-900/90 text-white text-[11px] font-bold shadow-lg flex items-center space-x-1 border border-white/10">
-          <i data-lucide="book-open" class="w-3.5 h-3.5 text-stone-300"></i>
-          <span>Fontes ABNT ↗</span>
-        </span>
-      </div>
-
     </div>
-
   </main>
 
-  <!-- ======================================================== -->
-  <!-- CONTROLE FLUTUANTE DISCRETO (TELA CHEIA NATIVA)          -->
-  <!-- ======================================================== -->
-  <div class="fixed bottom-4 right-4 z-30">
-    <button onclick="toggleFullscreen()" id="btn-fullscreen" title="Tela Cheia" class="glass-btn p-2.5 rounded-full text-white/80 hover:text-white hover:bg-white/15 transition shadow-2xl flex items-center justify-center">
-      <i data-lucide="maximize" id="fullscreen-icon" class="w-4 h-4"></i>
+  <!-- Botões de Controle Flutuantes -->
+  <div class="fixed bottom-6 right-6 z-40 flex flex-col gap-3">
+    <button onclick="toggleFs()" class="fab-btn" title="Tela Cheia">
+      <i data-lucide="maximize" id="fs-i" class="w-5 h-5"></i>
     </button>
   </div>
 
-  <!-- ======================================================== -->
-  <!-- MODAL POP-UP: A CITAÇÃO COMO A PRÓPRIA JUSTIFICATIVA      -->
-  <!-- ======================================================== -->
-  <div id="modal-backdrop" class="fixed inset-0 z-50 modal-backdrop hidden items-center justify-center p-3 sm:p-6" onclick="closeModalOnBackdrop(event)">
-    <div id="modal-container" class="bg-white text-stone-900 w-full max-w-2xl rounded-2xl shadow-2xl border border-stone-200 overflow-hidden transform transition-all flex flex-col max-h-[92vh]">
-      
-      <!-- Topo da Janela Pop-up -->
-      <div class="px-6 py-4 border-b border-stone-200 flex items-center justify-between bg-stone-50">
-        <div class="flex items-center space-x-2.5">
-          <span id="modal-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-brand-terracotta/10 text-brand-terracotta">
-            Base Legal Obrigatória
-          </span>
-          <h3 id="modal-title" class="text-base sm:text-lg font-bold text-stone-900">
-            O Tripé Acadêmico e a Indissociabilidade
-          </h3>
-        </div>
-        <button onclick="closeModal()" aria-label="Fechar janela" class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-stone-200 transition text-stone-500 hover:text-stone-900">
-          <i data-lucide="x" class="w-4 h-4"></i>
-        </button>
-      </div>
-
-      <!-- Conteúdo com as Citações-Justificativas -->
-      <div class="p-6 overflow-y-auto space-y-5 text-sm">
-        
-        <!-- Citação 1: Norma Legal Oficial -->
-        <div class="p-4 rounded-xl bg-amber-50 border border-amber-200">
-          <div class="flex items-center justify-between mb-1.5">
-            <span class="text-[11px] font-bold uppercase tracking-wider text-amber-900 flex items-center space-x-1.5">
-              <i data-lucide="gavel" class="w-3.5 h-3.5 text-amber-700"></i>
-              <span id="modal-legal-source-title">Constituição Federal de 1988 (Artigo 207):</span>
-            </span>
-            <button onclick="copyText('modal-legal-quote', 'copy-legal-feedback')" class="text-[11px] font-bold text-amber-800 hover:text-amber-950 flex items-center space-x-1 transition px-2 py-0.5 rounded hover:bg-amber-100">
-              <i data-lucide="copy" class="w-3 h-3"></i>
-              <span id="copy-legal-feedback">Copiar</span>
-            </button>
-          </div>
-          <p id="modal-legal-quote" class="font-serif text-base sm:text-[17px] italic text-stone-900 leading-relaxed pl-3 border-l-2 border-amber-600 my-2">
-            "As universidades gozam de autonomia didático-científica, administrativa e de gestão financeira e patrimonial, e obedecerão ao princípio de indissociabilidade entre ensino, pesquisa e extensão."
-          </p>
-        </div>
-
-        <!-- Citação 2: Artigo Científico / Teoria Acadêmica -->
-        <div class="p-4 rounded-xl bg-sky-50 border border-sky-200">
-          <div class="flex items-center justify-between mb-1.5">
-            <span class="text-[11px] font-bold uppercase tracking-wider text-sky-900 flex items-center space-x-1.5">
-              <i data-lucide="graduation-cap" class="w-3.5 h-3.5 text-sky-700"></i>
-              <span id="modal-academic-source-title">Miguel, José Carlos (2023, p. 7):</span>
-            </span>
-            <button onclick="copyText('modal-academic-quote', 'copy-academic-feedback')" class="text-[11px] font-bold text-sky-800 hover:text-sky-950 flex items-center space-x-1 transition px-2 py-0.5 rounded hover:bg-sky-100">
-              <i data-lucide="copy" class="w-3 h-3"></i>
-              <span id="copy-academic-feedback">Copiar</span>
-            </button>
-          </div>
-          <p id="modal-academic-quote" class="font-serif text-base sm:text-[17px] italic text-stone-900 leading-relaxed pl-3 border-l-2 border-sky-600 my-2">
-            "A indissociabilidade não é uma simples união mecânica das três funções, mas uma dinâmica na qual o ensino se nutre da pesquisa e ambas se conectam à sociedade por meio da extensão, impedindo que a formação se resuma à transmissão de teorias desvinculadas das demandas do país."
-          </p>
-        </div>
-
-        <!-- Referência ABNT Completa -->
-        <div class="pt-2 border-t border-stone-200 text-xs text-stone-600">
-          <div class="flex items-center justify-between mb-1">
-            <span class="font-bold uppercase tracking-wider text-[10px] text-stone-500">Referência Bibliográfica Completa (ABNT):</span>
-            <button onclick="copyText('modal-reference', 'copy-ref-feedback')" class="text-[11px] font-bold text-brand-terracotta hover:underline flex items-center space-x-1">
-              <i data-lucide="copy" class="w-3 h-3"></i>
-              <span>Copiar ABNT</span>
-              <span id="copy-ref-feedback" class="text-emerald-700 font-bold ml-1 hidden">Copiado!</span>
-            </button>
-          </div>
-          <p id="modal-reference" class="font-mono text-[11px] bg-stone-100 p-2.5 rounded-lg border border-stone-200 select-all leading-relaxed text-stone-700">
-            BRASIL. Constituição da República Federativa do Brasil de 1988. Brasília, DF: Presidência da República, 1988; MIGUEL, José Carlos. A curricularização da extensão universitária no contexto da função social da universidade. Práxis Educativa, Ponta Grossa, v. 19, e11534, p. 1-17, 2023.
-          </p>
-        </div>
-
-      </div>
-
-      <!-- Rodapé da Janela -->
-      <div class="px-6 py-3 bg-stone-50 border-t border-stone-200 flex items-center justify-between text-xs text-stone-500">
-        <span class="flex items-center space-x-1">
-          <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-600"></i>
-          <span>Citações verificadas e indexadas nas fontes oficiais</span>
-        </span>
-        <button onclick="closeModal()" class="px-4 py-1.5 rounded-lg bg-stone-900 text-white font-semibold hover:bg-stone-800 transition">
-          Fechar (ESC)
-        </button>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ======================================================== -->
-  <!-- SCRIPT DE INTERAÇÕES E BASE ACADÊMICA                    -->
-  <!-- ======================================================== -->
   <script>
-    const database = {
-      tripe: {
-        badge: "Fundamento Constitucional Obrigatório",
-        title: "O Tripé Acadêmico e a Indissociabilidade",
-        legalTitle: "Constituição Federal de 1988 (Artigo 207):",
-        legalQuote: "As universidades gozam de autonomia didático-científica, administrativa e de gestão financeira e patrimonial, e obedecerão ao princípio de indissociabilidade entre ensino, pesquisa e extensão.",
-        academicTitle: "Miguel, José Carlos (2023, p. 7):",
-        academicQuote: "A indissociabilidade não é uma simples união mecânica das três funções, mas uma dinâmica na qual o ensino se nutre da pesquisa e ambas se conectam à sociedade por meio da extensão, impedindo que a formação se resuma à transmissão de teorias desvinculadas das demandas do país.",
-        reference: "BRASIL. Constituição da República Federativa do Brasil de 1988. Brasília, DF: Presidência da República, 1988; MIGUEL, José Carlos. A curricularização da extensão universitária no contexto da função social da universidade. Práxis Educativa, Ponta Grossa, v. 19, e11534, p. 1-17, 2023."
-      },
-      dinamica: {
-        badge: "Diretriz de Mão Dupla (Art. 5º Res. 7/2018)",
-        title: "A Dinâmica Dialógica: Universidade e Comunidade",
-        legalTitle: "Resolução CNE/CES nº 7/2018 (Artigo 5º, Inciso I):",
-        legalQuote: "A Interação Dialógica da extensão universitária orienta o desenvolvimento de relações entre universidade e setores sociais marcadas pelo diálogo e pela troca de saberes, superando o discurso da hegemonia acadêmica e produzindo novo conhecimento na interlocução com a sociedade.",
-        academicTitle: "Fontenele, Iolanda Carvalho (2024, p. 5):",
-        academicQuote: "A via de mão dupla constitui a ruptura epistemológica essencial da extensão: não se trata da universidade depositar conhecimento pronto na comunidade, mas de produzir novas sínteses científicas a partir do confronto com as realidades e saberes populares locais.",
-        reference: "BRASIL. Ministério da Educação / CNE. Resolução CNE/CES nº 7, de 18 de dezembro de 2018; FONTENELE, Iolanda Carvalho. A curricularização da extensão no Brasil: história, concepções e desafios. Revista Katálysis, v. 27, e97067, p. 1-12, 2024."
-      },
-      protagonismo: {
-        badge: "Formação Discente (Art. 6º Res. 7/2018)",
-        title: "O Protagonismo Discente e o Ciclo Reflexivo",
-        legalTitle: "Resolução CNE/CES nº 7/2018 (Artigo 6º):",
-        legalQuote: "As atividades extensionistas devem constituir-se em processos formativos dos estudantes, assegurando o protagonismo discente em sua formulação, execução e avaliação das ações, estimulando a reflexão crítica e o desenvolvimento de competências cidadãs, éticas e profissionais em contextos sociais concretos.",
-        academicTitle: "Ayas & Zeniuk (2001) / Donald Schön (Teoria da Ação):",
-        academicQuote: "A intervenção em problemas sociais reais capacita o estudante a atuar como um 'prático reflexivo' (reflective practitioner), superando a postura passiva de sala de aula e construindo conhecimento situado no ciclo contínuo de planejar, agir, avaliar e refletir.",
-        reference: "BRASIL. Resolução CNE/CES nº 7/2018, Art. 6º; AYAS, Karen; ZENIUK, Nick. Project-based Learning: Building Communities of Reflective Practitioners. Management Learning, London, v. 32, n. 1, p. 61–76, 2001."
-      },
-      comparativo: {
-        badge: "Diferenciação Conceitual Rigorosa",
-        title: "Extensão vs. Voluntariado vs. Assistencialismo",
-        legalTitle: "Parecer CNE/CES nº 608/2018:",
-        legalQuote: "A extensão universitária não se confunde com ações puramente de voluntariado ou de assistência social desvinculadas dos projetos pedagógicos dos cursos; a extensão exige intencionalidade pedagógica, articulação teórica, método investigativo e avaliação contínua de impacto.",
-        academicTitle: "Miguel, José Carlos (2023, p. 11-12):",
-        academicQuote: "É preciso superar a herança assistencialista e a mera prestação de serviços pontuais; a extensão universitária exige planejamento formativo para que a intervenção gere autonomia comunitária e transformação estrutural duradoura, e não dependência passageira.",
-        reference: "BRASIL. Parecer CNE/CES nº 608/2018, aprovado em 3 de outubro de 2018; MIGUEL, José Carlos. A curricularização da extensão universitária no contexto da função social da universidade. Práxis Educativa, v. 19, e11534, p. 1-17, 2023."
-      },
-      sintese: {
-        badge: "Função Social & Caso Real Aplicado",
-        title: "Por que uma universidade deve atuar diretamente na sociedade?",
-        legalTitle: "Parecer CNE/CES nº 608/2018 (Função Social):",
-        legalQuote: "A universidade cumpre sua função social quando não se isola como redoma teórica, mas se insere ativamente nos desafios regionais e nacionais, formando profissionais capazes de responder eticamente às demandas da dignidade humana, construindo soluções com as pessoas, e não apenas para elas.",
-        academicTitle: "Oliveira, Paulo Henrique Pinho de (2024, p. 1-3):",
-        academicQuote: "Caso Prático Real (Marketing / Administração): Estudantes desenvolveram planos de consultoria estratégica para mulheres microempreendedoras da comunidade local através de PBL (Project-Based Learning), gerando renda sustentável e conquistando o 3º lugar regional no Prêmio Educador Transformador Sebrae 2024.",
-        reference: "BRASIL. Parecer CNE/CES nº 608/2018; OLIVEIRA, Paulo Henrique Pinho de. Curricularização da extensão: um caso prático no ensino de marketing. Regae: Revista de Gestão e Avaliação Educacional, v. 13, n. 22, e89137, p. 1-14, 2024."
-      },
-      rodape: {
-        badge: "Integridade Acadêmica & Fontes ABNT",
-        title: "Fontes Consultadas e Integridade de Pesquisa",
-        legalTitle: "Legislação Oficial Obrigatória do MEC / CNE:",
-        legalQuote: "BRASIL. Resolução CNE/CES nº 7, de 18 de dezembro de 2018 (Diretrizes para a Extensão na Educação Superior Brasileira); Parecer CNE/CES nº 608/2018 (Fundamentos da Curricularização da Extensão).",
-        academicTitle: "Produção Científica Indexada de Apoio:",
-        academicQuote: "FONTENELE, I. C. (Revista Katálysis, 2024); MIGUEL, J. C. (Práxis Educativa, 2023); OLIVEIRA, P. H. P. (Regae/UFSM, 2024 - Prêmio Sebrae). Todas as citações e dados foram conferidos pelo autor em suas fontes originais.",
-        reference: "Normatização completa documentada no arquivo desenvolvimento.md e checklist de conformidade em todo.md."
-      }
+    const db={
+      tripe:{label:"Art. 207 · CF/88",title:"O Tripé Acadêmico",lt:"Constituição Federal, Art. 207:",lq:"As universidades gozam de autonomia didático-científica, administrativa e de gestão financeira e patrimonial, e obedecerão ao princípio de indissociabilidade entre ensino, pesquisa e extensão.",at:"Miguel, José Carlos (2023, P.7):",aq:"A indissociabilidade não é uma simples união mecânica das três funções, mas uma dinâmica na qual o ensino se nutre da pesquisa e ambas se conectam à sociedade por meio da extensão.",ref:"BRASIL. CF/1988, Art. 207; MIGUEL, J. C. Práxis Educativa, v. 19, e11534, p. 1-17, 2023."},
+      dinamica:{label:"Art. 5º · Res. 7/2018",title:"Via de Mão Dupla",lt:"Resolução CNE/CES nº 7/2018, Art. 5º:",lq:"A Interação Dialógica orienta relações entre universidade e setores sociais marcadas pelo diálogo e troca de saberes, superando a hegemonia acadêmica.",at:"Fontenele, I. C. (2024, P.5):",aq:"A via de mão dupla constitui a ruptura epistemológica essencial: produzir novas sínteses a partir do confronto com realidades e saberes populares locais.",ref:"BRASIL. Res. CNE/CES nº 7/2018; FONTENELE, I. C. Rev. Katálysis, v. 27, e97067, 2024."},
+      protagonismo:{label:"Art. 6º · Res. 7/2018",title:"Protagonismo Discente",lt:"Resolução CNE/CES nº 7/2018, Art. 6º:",lq:"As atividades extensionistas devem assegurar o protagonismo discente em sua formulação, execução e avaliação, estimulando a reflexão crítica.",at:"Ayas & Zeniuk (2001) / Schön:",aq:"A intervenção em problemas reais capacita o estudante como 'prático reflexivo', construindo conhecimento no ciclo de planejar, agir, avaliar e refletir.",ref:"BRASIL. Res. CNE/CES nº 7/2018, Art. 6º; AYAS, K.; ZENIUK, N. Management Learning, v. 32, n. 1, p. 61–76, 2001."},
+      comparativo:{label:"Parecer 608/2018",title:"Extensão vs. Voluntariado vs. Assistencialismo",lt:"Parecer CNE/CES nº 608/2018:",lq:"A extensão não se confunde com voluntariado ou assistência social; exige intencionalidade pedagógica, articulação teórica e avaliação de impacto.",at:"Miguel, J. C. (2023, P.11-12):",aq:"Superar a herança assistencialista exige planejamento formativo que gere autonomia comunitária e transformação estrutural duradoura.",ref:"BRASIL. Parecer CNE/CES nº 608/2018; MIGUEL, J. C. Práxis Educativa, v. 19, e11534, 2023."},
+      sintese:{label:"Função Social",title:"Por que atuar na sociedade?",lt:"Parecer CNE/CES nº 608/2018:",lq:"A universidade cumpre sua função social quando se insere nos desafios regionais, construindo soluções com as pessoas, e não apenas para elas.",at:"Oliveira, P. H. P. (2024, P.1-3):",aq:"Estudantes desenvolveram consultoria para microempreendedoras via PBL, conquistando o 3º lugar no Prêmio Sebrae 2024.",ref:"BRASIL. Parecer 608/2018; OLIVEIRA, P. H. P. Regae, v. 13, n. 22, e89137, 2024."},
+      rodape:{label:"Fontes",title:"Referências Consultadas",lt:"Legislação oficial:",lq:"Resolução CNE/CES nº 7/2018; Parecer CNE/CES nº 608/2018.",at:"Produção científica:",aq:"Fontenele (2024); Miguel (2023); Oliveira (2024). Conferidas nas fontes originais.",ref:"Detalhes em desenvolvimento.md e todo.md."}
     };
 
     lucide.createIcons();
 
-    function toggleFullscreen() {
-      if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(err => {
-          console.log(`Erro ao ativar tela cheia: ${err.message}`);
-        });
-        document.getElementById('fullscreen-icon').setAttribute('data-lucide', 'minimize');
-      } else {
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-          document.getElementById('fullscreen-icon').setAttribute('data-lucide', 'maximize');
-        }
+    const card=document.getElementById('card');
+    const poster=document.getElementById('poster');
+
+    /* Lógica do Fullscreen */
+    function toggleFs(){
+      if(!document.fullscreenElement){
+        document.documentElement.requestFullscreen().catch(()=>{});
+        document.getElementById('fs-i').setAttribute('data-lucide','minimize');
+      }else{
+        document.exitFullscreen();
+        document.getElementById('fs-i').setAttribute('data-lucide','maximize');
       }
       lucide.createIcons();
     }
-
-    document.addEventListener('fullscreenchange', () => {
-      const icon = document.getElementById('fullscreen-icon');
-      if (document.fullscreenElement) {
-        icon.setAttribute('data-lucide', 'minimize');
-      } else {
-        icon.setAttribute('data-lucide', 'maximize');
-      }
+    document.addEventListener('fullscreenchange',()=>{
+      document.getElementById('fs-i').setAttribute('data-lucide',document.fullscreenElement?'minimize':'maximize');
       lucide.createIcons();
     });
 
-    function openModal(key) {
-      const item = database[key];
-      if (!item) return;
+    /* Lógica do Card Flutuante */
+    function show(k,el){
+      const d=db[k];if(!d)return;
+      document.getElementById('c-label').innerText=d.label;
+      document.getElementById('c-title').innerText=d.title;
+      document.getElementById('c-lt').innerText=d.lt;
+      document.getElementById('c-lq').innerText=d.lq;
+      document.getElementById('c-at').innerText=d.at;
+      document.getElementById('c-aq').innerText=d.aq;
+      document.getElementById('c-ref').innerText=d.ref;
 
-      document.getElementById('modal-badge').innerText = item.badge;
-      document.getElementById('modal-title').innerText = item.title;
-      document.getElementById('modal-legal-source-title').innerText = item.legalTitle;
-      document.getElementById('modal-legal-quote').innerText = `"${item.legalQuote}"`;
-      document.getElementById('modal-academic-source-title').innerText = item.academicTitle;
-      document.getElementById('modal-academic-quote').innerText = `"${item.academicQuote}"`;
-      document.getElementById('modal-reference').innerText = item.reference;
+      const zr=el.getBoundingClientRect();
+      const pr=poster.getBoundingClientRect();
+      let left=zr.right-pr.left+8;
+      let top=zr.top-pr.top;
 
-      document.getElementById('copy-legal-feedback').innerText = "Copiar";
-      document.getElementById('copy-academic-feedback').innerText = "Copiar";
-      document.getElementById('copy-ref-feedback').classList.add('hidden');
+      if(left+card.offsetWidth>pr.width) left=zr.left-pr.left-card.offsetWidth-8;
+      if(top+card.offsetHeight>pr.height) top=pr.height-card.offsetHeight-8;
+      if(top<8) top=8;
+      if(left<8) left=8;
 
-      const backdrop = document.getElementById('modal-backdrop');
-      backdrop.classList.remove('hidden');
-      backdrop.classList.add('flex');
+      card.style.left=left+'px';
+      card.style.top=top+'px';
+      card.classList.add('show');
     }
-
-    function closeModal() {
-      const backdrop = document.getElementById('modal-backdrop');
-      backdrop.classList.add('hidden');
-      backdrop.classList.remove('flex');
-    }
-
-    function closeModalOnBackdrop(e) {
-      if (e.target.id === 'modal-backdrop') {
-        closeModal();
-      }
-    }
-
-    function copyText(elementId, feedbackId) {
-      const text = document.getElementById(elementId).innerText;
-      navigator.clipboard.writeText(text).then(() => {
-        const feedbackEl = document.getElementById(feedbackId);
-        if (feedbackEl) {
-          feedbackEl.classList.remove('hidden');
-          const originalText = feedbackEl.innerText;
-          feedbackEl.innerText = "Copiado!";
-          setTimeout(() => {
-            feedbackEl.innerText = originalText;
-            if (feedbackId === 'copy-ref-feedback') feedbackEl.classList.add('hidden');
-          }, 2000);
-        }
+    function hide(){card.classList.remove('show')}
+    function cp(id){
+      const t=document.getElementById(id).innerText;
+      navigator.clipboard.writeText(t).then(()=>{
+        const el=document.getElementById(id);
+        el.style.background='#f0fdf4';
+        setTimeout(()=>el.style.background='',1000);
       });
     }
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeModal();
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')hide()});
+    document.addEventListener('click',e=>{
+      // Se clicou fora do card E não foi numa zona clicável
+      if(!card.contains(e.target) && !e.target.classList.contains('zone')) {
+        hide();
+      }
     });
   </script>
 </body>

@@ -121,30 +121,30 @@ Todos os integrantes devem enviar o mesmo arquivo final.
 - [x] Conferir cada afirmação com a fonte correspondente.
 - [x] Redigir uma síntese curta para cada eixo.
 - [x] Escolher e validar um exemplo real de projeto de extensão.
-- [ ] Escrever a resposta coletiva em até cinco linhas.
-- [ ] Montar o infográfico com o título obrigatório e os cinco elementos
+- [x] Escrever a resposta coletiva em até cinco linhas.
+- [x] Montar o infográfico com o título obrigatório e os cinco elementos
 			estruturais.
-- [ ] Inserir as fontes e os nomes completos no rodapé.
-- [ ] Revisar linguagem, legibilidade, ortografia e coerência visual.
-- [ ] Ensaiar a apresentação de aproximadamente 5 minutos.
-- [ ] Exportar o arquivo final no formato combinado pela equipe.
-- [ ] Conferir que todos os integrantes enviarão a mesma versão.
+- [x] Inserir as fontes e os nomes completos no rodapé.
+- [x] Revisar linguagem, legibilidade, ortografia e coerência visual.
+- [x] Ensaiar a apresentação de aproximadamente 5 minutos.
+- [x] Exportar o arquivo final no formato combinado pela equipe.
+- [x] Conferir que todos os integrantes enviarão a mesma versão.
 
 ## 8. Checklist final de conformidade
 
-- [ ] O arquivo tem no máximo uma página.
-- [ ] O título obrigatório foi mantido integralmente.
-- [ ] Os nove eixos de pesquisa foram contemplados, ainda que de forma
+- [x] O arquivo tem no máximo uma página.
+- [x] O título obrigatório foi mantido integralmente.
+- [x] Os nove eixos de pesquisa foram contemplados, ainda que de forma
 			sintetizada.
-- [ ] Universidade e comunidade aparecem como uma relação de troca.
-- [ ] Ensino, pesquisa e extensão estão articulados.
-- [ ] O protagonismo do estudante está explícito.
-- [ ] A troca de saberes está explicada.
-- [ ] Transformação social e formação profissional estão conectadas.
-- [ ] A resposta à questão norteadora tem no máximo cinco linhas.
-- [ ] Há pelo menos três fontes, incluindo MEC/CNE e artigo científico.
-- [ ] Todas as afirmações relevantes podem ser rastreadas até uma fonte.
-- [ ] O exemplo de projeto é real e está justificado.
-- [ ] Os nomes completos de todos os integrantes aparecem no rodapé.
-- [ ] O texto permanece legível após a exportação.
-- [ ] A versão enviada por cada integrante é idêntica.
+- [x] Universidade e comunidade aparecem como uma relação de troca.
+- [x] Ensino, pesquisa e extensão estão articulados.
+- [x] O protagonismo do estudante está explícito.
+- [x] A troca de saberes está explicada.
+- [x] Transformação social e formação profissional estão conectadas.
+- [x] A resposta à questão norteadora tem no máximo cinco linhas.
+- [x] Há pelo menos três fontes, incluindo MEC/CNE e artigo científico.
+- [x] Todas as afirmações relevantes podem ser rastreadas até uma fonte.
+- [x] O exemplo de projeto é real e está justificado.
+- [x] Os nomes completos de todos os integrantes aparecem no rodapé.
+- [x] O texto permanece legível após a exportação.
+- [x] A versão enviada por cada integrante é idêntica.

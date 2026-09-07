@@ -1,17 +1,10 @@
-# PIE — Compreendendo a Extensão Universitária
+# PIE — Projeto Integrador Extensionista
 
 > **Projeto de Extensão CESUTech 2026/2 — Conectando Gerações e Impulsionando o Futuro e o Protagonismo Digital**  
 > *Faculdade UNICESUSC | Florianópolis, SC*  
 > **Autor:** Mateus Suman Carpenter  
 
-[![Figma](https://img.shields.io/badge/Figma-Design%20System-F24E1E?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/design/Jjd1Sn0VJ38R0LKLBwQmc2/Infografico?node-id=0-1)
-[![Status](https://img.shields.io/badge/Status-Finalizado-success?style=for-the-badge)]()
-[![Metodologia](https://img.shields.io/badge/Metodologia-PBL%20%2B%20MCP-blueviolet?style=for-the-badge)]()
-[![Integridade Acadêmica](https://img.shields.io/badge/IA%20Declarada-Conforme-informational?style=for-the-badge)](processo.md)
-
----
-
-## 📌 Visão Geral do Projeto
+## Visão Geral do Projeto
 
 Este repositório documenta o desenvolvimento analítico, visual e técnico da **Atividade 01: Compreendendo a Extensão Universitária**, cujo objetivo é responder de forma fundamentada e gráfica à questão norteadora:
 
@@ -19,22 +12,22 @@ Este repositório documenta o desenvolvimento analítico, visual e técnico da *
 
 O resultado final é um **Infográfico Editorial em página única**, estruturado no Figma e acompanhado de um **Mini-App Web Interativo** para consulta detalhada das evidências acadêmicas, leis e pareceres normativos que sustentam cada decisão visual.
 
-![Infográfico Final](assets/infografico-final.jpg)
+![Infográfico Final](assets/infografico-final-v2.jpg)
 
 ---
 
-## 🧭 Navegação Rápida
+## Navegação Rápida
 
-* 🌐 **[Mini-App Interativo (GitHub Pages)](index.html):** Versão web com hotspots clicáveis e consulta direta às fontes bibliográficas.
-* 🎨 **[Projeto no Figma](https://www.figma.com/design/Jjd1Sn0VJ38R0LKLBwQmc2/Infografico?node-id=0-1):** Artboard, Design System, componentes vetoriais e Auto Layouts.
-* 🤖 **[Declaração de Uso de IA & Processo](processo.md):** Relatório transparente sobre o uso de Gemini, Copilot, Claude e Antigravity via MCP.
-* 📚 **[Dossiê de Pesquisa dos 9 Eixos](desenvolvimento.md):** Tabela de fichamento, justificativa epistemológica e roteiro de oratória (pitch de 5 min).
-* 📐 **[Especificação Visual](infografico.md):** Guia tipográfico, paleta de cores e parâmetros de diagramação.
-* 📋 **[Checklist de Conformidade](todo.md):** Controle de requisitos acadêmicos da atividade.
+* **[Mini-App Interativo (GitHub Pages)](index.html):** Versão web com hotspots clicáveis e consulta direta às fontes bibliográficas.
+* **[Projeto no Figma](https://www.figma.com/design/Jjd1Sn0VJ38R0LKLBwQmc2/Infografico?node-id=0-1):** Artboard, Design System, componentes vetoriais e Auto Layouts.
+* **[Declaração de Uso de IA & Processo](processo.md):** Relatório transparente sobre o uso de Gemini, Copilot, Claude e Antigravity via MCP.
+* **[Dossiê de Pesquisa dos 9 Eixos](desenvolvimento.md):** Tabela de fichamento, justificativa epistemológica e roteiro de oratória (pitch de 5 min).
+* **[Especificação Visual](infografico.md):** Guia tipográfico, paleta de cores e parâmetros de diagramação.
+* **[Checklist de Conformidade](todo.md):** Controle de requisitos acadêmicos da atividade.
 
 ---
 
-## 🏛️ Os Cinco Pilares Estruturais do Infográfico
+## Os Cinco Pilares Estruturais do Infográfico
 
 O infográfico articula visualmente as diretrizes da **Resolução CNE/CES nº 7/2018** e da **Constituição Federal de 1988 (Art. 207)** através de cinco blocos integrados:
 
@@ -59,7 +52,7 @@ O infográfico articula visualmente as diretrizes da **Resolução CNE/CES nº 7
 
 ---
 
-## 📊 Matriz Resumida dos Nove Eixos de Pesquisa
+## Matriz Resumida dos Nove Eixos de Pesquisa
 
 | Eixo Teórico / Normativo | Base Legal / Fonte Acadêmica | Síntese do Conceito Aplicado |
 | :--- | :--- | :--- |
@@ -75,19 +68,19 @@ O infográfico articula visualmente as diretrizes da **Resolução CNE/CES nº 7
 
 ---
 
-## 🛠️ Tecnologias e Metodologia Empregada
+## Tecnologias e Metodologia Empregada
 
 O projeto combinou rigor científico, design visual e automação com agentes inteligentes:
 
 * **Design e UI:** [Figma](https://figma.com) (componentes vetoriais, grid de 12 colunas, tokens de cores e Auto Layouts responsivos).
 * **Protocolo MCP (Model Context Protocol):** Conexão direta entre IDE e a API do Figma para inspeção estrutural de camadas, refatoração de layout e validação de parâmetros.
-* **Inteligência Artificial Generativa:** Uso declarado e ético de **Google Gemini / NotebookLM**, **GitHub Copilot**, **Google Antigravity** e **Claude** para transcrição de PDFs, auxílio em formatação Markdown e auditoria de código.
+* **Inteligência Artificial Generativa:** Uso declarado e ético de **Google Gemini / NotebookLM**, **GitHub Copilot**, **Claude** e **Google Antigravity** via MCP.
 * **Tratamento Gráfico:** NanoBanana para vetorização e equilíbrio tonal de ilustrações.
 * **Web:** HTML5 semântico, Tailwind CSS e Vanilla JavaScript para o mini-app interativo.
 
 ---
 
-## 📁 Estrutura de Arquivos
+## Estrutura de Arquivos
 
 ```text
 PIE/
@@ -98,7 +91,7 @@ PIE/
 ├── desenvolvimento.md             # Tabela de pesquisa detalhada e roteiro do pitch
 ├── todo.md                        # Checklist acadêmico de controle da entrega
 ├── assets/
-│   ├── infografico-final.jpg      # Imagem em altíssima resolução (4x/2x)
+│   ├── infografico-final-v2.jpg   # Imagem em altíssima resolução (4x/2x)
 │   └── componentes/               # Ícones e ilustrações originais exportados
 ├── material-apoio/                # Documentos oficiais da disciplina (PDFs e DOCXs)
 └── referencias-basicas/           # Artigos acadêmicos e pareceres do CNE/MEC
@@ -106,11 +99,10 @@ PIE/
 
 ---
 
-## 👨‍💻 Autoria e Identificação Acadêmica
+## Autoria e Identificação Acadêmica
 
 * **Aluno:** Mateus Suman Carpenter
 * **Matrícula / E-mail Institucional:** 2521660@unicesusc.edu.br
 * **Disciplina:** Projeto de Extensão CESUTech 2026/2
 * **Docente Responsável:** Coordenação de Extensão UNICESUSC
 * **Florianópolis, Setembro de 2026**
-
