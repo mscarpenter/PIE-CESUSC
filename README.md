@@ -18,7 +18,7 @@ O resultado final é um **Infográfico Editorial em página única**, estruturad
 
 ## Navegação Rápida
 
-* **[Mini-App Interativo (GitHub Pages)](index.html):** Versão web com hotspots clicáveis e consulta direta às fontes bibliográficas.
+* **[Mini-App Interativo (GitHub Pages)](https://mscarpenter.github.io/PIE-CESUSC/):** Versão web com hotspots clicáveis e consulta direta às fontes bibliográficas.
 * **[Projeto no Figma](https://www.figma.com/design/Jjd1Sn0VJ38R0LKLBwQmc2/Infografico?node-id=0-1):** Artboard, Design System, componentes vetoriais e Auto Layouts.
 * **[Declaração de Uso de IA & Processo](processo.md):** Relatório transparente sobre o uso de Gemini, Copilot, Claude e Antigravity via MCP.
 * **[Dossiê de Pesquisa dos 9 Eixos](desenvolvimento.md):** Tabela de fichamento, justificativa epistemológica e roteiro de oratória (pitch de 5 min).
